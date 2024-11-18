@@ -1,0 +1,179 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e0e7ff, #f0f5f9);
+    color: #2e384d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    text-align: center;
+    transition: background-color 0.5s ease, color 0.3s ease;
+}
+
+/* Header Styles */
+header {
+    margin-bottom: 30px;
+    animation: slideIn 1s ease-out;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #2b6cb0;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header p {
+    font-size: 1rem;
+    color: #718096;
+    font-style: italic;
+}
+
+/* Main Content Styles */
+main {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px;
+    margin-bottom: 35px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+main:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.15);
+}
+
+#verseDisplay {
+    display: none;
+    font-size: 1.8rem;
+    line-height: 1.7;
+    color: #2d3748;
+    font-weight: 500;
+    padding: 20px;
+    background: #edf2f7;
+    border-left: 6px solid #3182ce;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+main h2 {
+    font-size: 1.4rem;
+    color: #a0aec0;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+main:hover h2 {
+    color: #4a5568;
+}
+
+/* Section Styles */
+section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    animation: fadeIn 1.5s ease-out;
+}
+
+section p {
+    font-size: 1.1rem;
+    color: #4a5568;
+}
+
+/* Button Styles */
+#verseGrab {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 12px rgba(66, 153, 225, 0.4);
+}
+
+#verseGrab:hover {
+    background: linear-gradient(135deg, #3182ce, #2b6cb0);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(49, 130, 206, 0.5);
+}
+
+#verseGrab:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(49, 130, 206, 0.3);
+}
+
+/* Footer Styles */
+footer {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #718096;
+    opacity: 0.8;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    main {
+        padding: 30px;
+    }
+
+    #verseDisplay {
+        font-size: 1.4rem;
+    }
+
+    main h2 {
+        font-size: 1.1rem;
+    }
+
+    #verseGrab {
+        font-size: 1rem;
+        padding: 12px 25px;
+    }
+}
+
+/* Keyframe Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
