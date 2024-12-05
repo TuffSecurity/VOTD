@@ -35,7 +35,7 @@ const pullData = async () => {
 };
 
 // Function to save a bookmark
-const saveBookmark = async (text) => {
+const saveMomBookmark = async (text) => {
     try {
         const res = await fetch(`${API_BASE_URL}/saveMomBookmark`, {
             method: 'POST',
@@ -55,7 +55,7 @@ const saveBookmark = async (text) => {
 };
 
 // Function to load and display bookmarks
-const loadBookmarks = async () => {
+const loadMomBookmarks = async () => {
     try {
         const res = await fetch(`${API_BASE_URL}/getMomBookmarks`, {
             method: 'GET',
@@ -79,7 +79,7 @@ const loadBookmarks = async () => {
 };
 
 // Function to render bookmarks
-const displayBookmarks = (bookmarks) => {
+const displayMomBookmarks = (bookmarks) => {
     const bookmarkContainer = document.getElementById("bookmarkContainer");
     if (!bookmarks || bookmarks.length === 0) {
         bookmarkContainer.innerHTML = "<p>No bookmarks available.</p>";
@@ -122,7 +122,7 @@ const displayPrayer = (id, title, prayer) => {
 
     // Add event listener to the delete button
     const deleteButton = prayerArchiveDisplay.querySelector(`[data-id="${id}"]`);
-    deleteButton.addEventListener("click", () => deletePrayer(id, deleteButton.parentElement));
+    deleteButton.addEventListener("click", () => deleteMomPrayer(id, deleteButton.parentElement));
 };
 
 // Fetch prayers from the server
@@ -180,7 +180,7 @@ const savePrayer = async () => {
 };
 
 // Delete a prayer
-const deletePrayer = async (id, prayerElement) => {
+const deleteMomPrayer = async (id, prayerElement) => {
     const confirmation = confirm("Are you sure you want to delete this prayer?");
     if (!confirmation) return;
 
