@@ -2,6 +2,7 @@ const verseDisplay = document.getElementById("verseDisplayGma");
 const grabBtn = document.getElementById("verseGrabGma");
 const placeHolder = document.getElementById("disappear");
 const bookMarkBtn = document.getElementById("bookMark");
+const bookmarkIcon = document.getElementById('bookmarkIcon');
 const bookMarkContainer = document.getElementById("bookMarkCont");
 const bookMarkDisplay = document.getElementById("bookMarkContainer");
 const showFormBtn = document.getElementById('showFormBtn');
@@ -91,8 +92,6 @@ const displayBookmarks = (bookmarks) => {
     });
 };
 
-const bookmarkIcon = document.getElementById("bookmarkIcon");
-
 const pullData = async () => {
     try {
         const req = await fetch('https://labs.bible.org/api/?passage=votd&formatting=para&type=json');
@@ -159,7 +158,7 @@ const loadPrayers = async () => {
 const savePrayer = async () => {
     const titleValue = prayerTitle.value.trim();
     const bodyValue = prayerBody.value.trim();
-prayerForm.preventDefault
+    prayerForm.preventDefault();
     if (!titleValue || !bodyValue) {
         alert('There needs to be a title and content to submit');
         return;
@@ -220,7 +219,7 @@ backBtn.addEventListener("click", () => {
 });
 
 grabBtn.addEventListener("click", pullData);
-bookmarkIcon.replaceWith(bookmarkIcon.cloneNode(true));
+
 bookMarkBtn.addEventListener("click", () => {
     bookMarkContainer.style.right = "0";
     loadBookmarks();
