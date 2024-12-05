@@ -107,3 +107,56 @@ header h1 {
     cursor: pointer;
     transition: background-color 0.3s;
 }
+/* Hide the login section by default */
+.login-section {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.login-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.login-section input {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.login-section button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-section button:hover {
+    background-color: #0056b3;
+}
+
+/* Fade-in animation for the login section */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

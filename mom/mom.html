@@ -7,6 +7,18 @@
     <title>Verse Of The Day</title>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li id="bookMark">Bookmarks</li>
+            <li id="prayerBtn">Prayer Archive</li>
+            <a href="https://www.biblegateway.com/versions/English-Standard-Version-ESV-Bible/#booklist">
+                <li>Bible</li>
+            </a>
+            <a href="/">
+                <li>Logout</li>
+            </a>
+        </ul>
+    </nav>
     <header>
         <h1 id="userName">Welcome, Mary Denten</h1>
         <p>Made from love 💕</p>
@@ -18,6 +30,32 @@
     <section>
         <p>Click the button to grab the verse of the day, <i>Mary Denten</i></p>
         <button id="verseGrab">Verse of the Day!</button>
+        <span id="bookmarkIcon" class="hidden">🔖</span>
+    </section>
+    <section class="bookMark-Section" id="bookMarkCont">
+        <button id="back">&larr; Back</button>
+        <div class="heading">
+            <h2>Mary Denten's Bookmarks</h2>
+        </div>
+        <div class="bookMarkContainer" id="bookMarkContainer"></div>
+    </section>
+    <section id="prayerArchiveSection" class="prayer-archive">
+        <button id="prayerBack">&larr; Back</button>
+        <div class="prayer-archive-container">
+            <h2>Submit Your Prayer</h2>
+            <p>Share your thoughts or prayers with us. Your prayer will be stored securely in the archive.</p>
+            <button id="showFormBtn">Add a Prayer</button>
+            <form id="prayerForm">
+                <label for="prayerTitle">Title</label>
+                <input type="text" id="prayerTitle" name="prayerTitle" placeholder="Enter a title for your prayer" required aria-required="true" />
+                <label for="prayerContent">Prayer</label>
+                <textarea id="prayerContent" name="prayerContent" placeholder="Write your prayer here..." rows="6" required aria-required="true"></textarea>
+                <button type="submit" id="submitPrayerButton">Submit Prayer</button>
+            </form>
+        </div>
+        <div class="archiveDisplay" id="archiveDisplay">
+            <p class="PlaceholderForFuture" id="placeHolder">No Prayers to Display...</p>
+        </div>
     </section>
     <footer>
         <p>Stay blessed 🌿</p>
