@@ -5,6 +5,7 @@ const bookmarkIcon = document.getElementById("bookmarkIcon");
 const bookMarkTab = document.getElementById("bookMark");
 const prayerTab = document.getElementById("prayerBtn");
 const bookMarkSection = document.getElementById("bookMarkCont");
+const bookMarkDisplay = document.getElementById("bookMarkContainer");
 const prayerArchiveSection = document.getElementById("prayerArchiveSection");
 const backBookMark = document.getElementById("backBookMark");
 const prayerBack = document.getElementById("prayerBack");
@@ -35,14 +36,14 @@ const pullData = async () => {
         const verseText = `${bookname} ${chapter}:${verse}, ${text}`;
         updateVerse(verseText);
         bookmarkIcon.classList.add("visible");
-        bookmarkIcon.addEventListener("click", () => saveMomBookmark(verseText));
+        bookmarkIcon.addEventListener("click", () => saveBookmark(verseText));
     } catch (error) {
         console.log("There was a data error: ", error);
     }
 };
 
 // Function to save a bookmark
-const saveMomBookmark = async (text) => {
+const saveBookmark = async (text) => {
     try {
         const res = await fetch(`${API_BASE_URL}/saveMomBookmark`, {
             method: 'POST',
@@ -53,9 +54,77 @@ const saveMomBookmark = async (text) => {
         if (!res.ok) throw new Error('Failed to save Bookmark');
 
         alert('Bookmark saved successfully');
+        displayBookmark({ verse: text, date: new Date().toISOString() }); // Add bookmark to UI
     } catch (error) {
         console.error("Error saving bookmark:", error);
         alert("There was a data error while saving the bookmark.");
+    }
+};
+
+// Function to load bookmarks
+const loadBookmarks = async () => {
+    try {
+        const res = await fetch(`${API_BASE_URL}/getMomBookmarks`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        const { success, bookmarks } = await res.json();
+
+        if (success) {
+            bookMarkDisplay.innerHTML = ""; // Clear existing bookmarks
+            bookmarks.forEach(displayBookmark);
+        } else {
+            bookMarkDisplay.innerHTML = "<p>No bookmarks available.</p>";
+        }
+    } catch (error) {
+        console.error("Error loading bookmarks:", error);
+        bookMarkDisplay.innerHTML = "<p>Error loading bookmarks.</p>";
+    }
+};
+
+// Function to display a bookmark
+const displayBookmark = ({ verse, date }) => {
+    const bookmarkDiv = `
+        <div class="exampleBookMark">
+            <p class="exampleVerse">${verse}</p>
+            <p class="date">${new Date(date).toLocaleString()}</p>
+        </div>
+    `;
+    bookMarkDisplay.innerHTML += bookmarkDiv;
+};
+
+// Function to save a prayer
+const savePrayer = async () => {
+    const prayerTitleInput = document.getElementById("prayerTitle");
+    const prayerContentInput = document.getElementById("prayerContent");
+    const titleValue = prayerTitleInput.value.trim();
+    const bodyValue = prayerContentInput.value.trim();
+
+    if (!titleValue || !bodyValue) {
+        alert("Title and prayer content are required!");
+        return;
+    }
+
+    try {
+        const res = await fetch(`${API_BASE_URL}/saveMomPrayer`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prayerTitle: titleValue, prayerBody: bodyValue }),
+        });
+
+        const { success, prayer } = await res.json();
+        if (success) {
+            displayPrayer(prayer._id, prayer.prayerTitle, prayer.prayerBody);
+            alert("Prayer saved successfully!");
+            prayerTitleInput.value = "";
+            prayerContentInput.value = "";
+        } else {
+            alert("Failed to save prayer.");
+        }
+    } catch (error) {
+        console.error("Error saving prayer:", error);
+        alert("An error occurred while saving the prayer.");
     }
 };
 
@@ -100,12 +169,12 @@ prayerArchiveDisplay.addEventListener("click", (event) => {
     if (event.target.classList.contains("delete-prayer-btn")) {
         const id = event.target.getAttribute("data-id");
         const prayerElement = event.target.parentElement;
-        deleteMomPrayer(id, prayerElement);
+        deletePrayer(id, prayerElement);
     }
 });
 
 // Function to delete a prayer
-const deleteMomPrayer = async (id, prayerElement) => {
+const deletePrayer = async (id, prayerElement) => {
     const confirmation = confirm("Are you sure you want to delete this prayer?");
     if (!confirmation) return;
 
@@ -128,44 +197,11 @@ const deleteMomPrayer = async (id, prayerElement) => {
     }
 };
 
-// Function to save a prayer
-const savePrayer = async () => {
-    const prayerTitleInput = document.getElementById("prayerTitle");
-    const prayerContentInput = document.getElementById("prayerContent");
-    const titleValue = prayerTitleInput.value.trim();
-    const bodyValue = prayerContentInput.value.trim();
-
-    if (!titleValue || !bodyValue) {
-        alert("Title and prayer content are required!");
-        return;
-    }
-
-    try {
-        const res = await fetch(`${API_BASE_URL}/saveMomPrayer`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prayerTitle: titleValue, prayerBody: bodyValue }),
-        });
-
-        const { success, prayer } = await res.json();
-        if (success) {
-            displayPrayer(prayer._id, prayer.prayerTitle, prayer.prayerBody);
-            alert("Prayer saved successfully!");
-            prayerTitleInput.value = "";
-            prayerContentInput.value = "";
-        } else {
-            alert("Failed to save prayer.");
-        }
-    } catch (error) {
-        console.error("Error saving prayer:", error);
-        alert("An error occurred while saving the prayer.");
-    }
-};
-
 // Event Listeners
 submitPrayerBtn.addEventListener("click", (e) => {
     e.preventDefault();
     savePrayer();
+    prayerForm.style.display = 'None';
 });
 
 prayerTab.addEventListener("click", () => {
@@ -181,4 +217,14 @@ showFormBtn.addEventListener("click", () => {
     prayerForm.style.display = 'flex';
 });
 
+bookMarkTab.addEventListener("click", () => {
+    bookMarkSection.classList.add("active");
+    loadBookmarks();
+});
+
+backBookMark.addEventListener("click", () => {
+    bookMarkSection.classList.remove("active");
+});
+
 grabBtn.addEventListener("click", pullData);
+
