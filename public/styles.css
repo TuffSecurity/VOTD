@@ -9,6 +9,7 @@ body {
     background-color: #f0f0f0;
     background-image: url('file-XUXuiocNESmjQjiHZNyNqc.webp');
     background-size: cover;
+    background-position: center;
     overflow: auto;
     background-repeat: no-repeat;
     min-height: 100vh;
@@ -16,6 +17,13 @@ body {
     flex-direction: column;
     align-items: center;
     padding-top: 200px; /* Space for fixed header */
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        background-size: contain;
+    background-position: center;
+    }
 }
 
 /* Header Styling */
