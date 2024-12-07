@@ -5,7 +5,6 @@ const placeHolder = document.getElementById("disappear");
 const bookmarkIcon = document.getElementById("bookmarkIcon");
 bookmarkIcon.classList.add("hidden");
 const API_BASE_URL = window.location.origin;
-
 const bookMarkTab = document.getElementById("bookMark");
 const prayerTab = document.getElementById("prayerBtn");
 const bookMarkSection = document.getElementById("bookMarkCont");

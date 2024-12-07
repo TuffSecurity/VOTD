@@ -198,7 +198,7 @@ app.post('/saveMomPrayer', async (req, res) => {
     }
 });
 
-app.get('/getPrayers', async (req, res) => {
+app.get('/getMomPrayers', async (req, res) => {
     try {
         const prayers = await MomPrayer.find().sort({ date: -1 });
         res.status(200).send({ success: true, prayers });
