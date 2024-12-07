@@ -187,7 +187,7 @@ nav {
     display: flex;
     justify-content: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    z-index: 5;
 }
 
 nav ul {
@@ -273,6 +273,18 @@ nav ul li:hover {
     right: 0;
 }
 
+.prayer-archive button {
+    align-self: flex-start;
+    background-color: #3182ce;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
 /* Styling reused for uniformity */
 #verseDisplay {
     font-size: 1.8rem;
@@ -338,15 +350,15 @@ nav ul li:hover {
 }
 
 #prayerForm button {
-    background: linear-gradient(135deg, #4299e1, #3182ce);
+    align-self: flex-start;
+    background-color: #3182ce;
     color: #fff;
     border: none;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 5px 12px rgba(66, 153, 225, 0.4);
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
 }
 
 #prayerForm button:hover {
