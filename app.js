@@ -208,7 +208,7 @@ app.get('/getMomPrayers', async (req, res) => {
     }
 });
 
-app.delete('/deletePrayer/:id', async (req, res) => {
+app.delete('/deleteMomPrayer/:id', async (req, res) => {
     const { id } = req.params;
 
     try {

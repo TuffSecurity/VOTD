@@ -371,3 +371,55 @@ nav ul li:hover {
     transform: translateY(1px);
     box-shadow: 0 4px 8px rgba(49, 130, 206, 0.3);
 }
+
+/* Bookmarks and Prayers Container */
+.exampleBookMark, .prayerEntry {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+}
+
+.exampleBookMark:hover, .prayerEntry:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.exampleVerse, .prayerEntry h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2b6cb0;
+    margin-bottom: 10px;
+}
+
+.date, .prayerEntry p {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+.delete-prayer-btn {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.delete-prayer-btn:hover {
+    background: #c53030;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .exampleBookMark, .prayerEntry {
+        padding: 15px;
+    }
+}

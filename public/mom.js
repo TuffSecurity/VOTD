@@ -1,16 +1,18 @@
-// Element References
 const verseDisplay = document.getElementById("verseDisplay");
 const grabBtn = document.getElementById("verseGrab");
 const placeHolder = document.getElementById("disappear");
 const bookmarkIcon = document.getElementById("bookmarkIcon");
-bookmarkIcon.classList.add("hidden");
-const API_BASE_URL = window.location.origin;
 const bookMarkTab = document.getElementById("bookMark");
 const prayerTab = document.getElementById("prayerBtn");
 const bookMarkSection = document.getElementById("bookMarkCont");
 const prayerArchiveSection = document.getElementById("prayerArchiveSection");
 const backBookMark = document.getElementById("backBookMark");
 const prayerBack = document.getElementById("prayerBack");
+const prayerForm = document.getElementById("prayerForm");
+const showFormBtn = document.getElementById("showFormBtn");
+const submitPrayerBtn = document.getElementById("submitPrayerButton");
+const prayerArchiveDisplay = document.getElementById("archiveDisplay");
+const API_BASE_URL = window.location.origin;
 
 // Function to update the displayed verse
 const updateVerse = (verse) => {
@@ -32,7 +34,6 @@ const pullData = async () => {
         const [{ bookname, chapter, verse, text }] = res;
         const verseText = `${bookname} ${chapter}:${verse}, ${text}`;
         updateVerse(verseText);
-        // Show the bookmark icon and enable saving
         bookmarkIcon.classList.add("visible");
         bookmarkIcon.addEventListener("click", () => saveMomBookmark(verseText));
     } catch (error) {
@@ -49,82 +50,40 @@ const saveMomBookmark = async (text) => {
             body: JSON.stringify({ verse: text }),
         });
 
-        if (!res.ok) {
-            throw new Error('Failed to save Bookmark');
-        }
+        if (!res.ok) throw new Error('Failed to save Bookmark');
 
         alert('Bookmark saved successfully');
     } catch (error) {
-        console.log(error);
+        console.error("Error saving bookmark:", error);
         alert("There was a data error while saving the bookmark.");
     }
 };
 
-// Function to load and display bookmarks
-const loadMomBookmarks = async () => {
-    const bookMarkContainer = document.getElementById("bookMarkContainer");
-    try {
-        const res = await fetch(`${API_BASE_URL}/getMomBookmarks`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (!res.ok) {
-            throw new Error('Failed to fetch bookmarks');
-        }
-
-        const data = await res.json();
-        if (data.success) {
-            displayMomBookmarks(data.bookmarks);
-        } else {
-            bookMarkContainer.innerHTML = "<p>No bookmarks available.</p>";
-        }
-    } catch (error) {
-        console.error("Error loading bookmarks:", error);
-        bookMarkContainer.innerHTML = "<p>Error loading bookmarks.</p>";
-    }
-};
-
-// Function to render bookmarks
-const displayMomBookmarks = (bookmarks) => {
-    const bookMarkContainer = document.getElementById("bookMarkContainer");
-    bookMarkContainer.innerHTML = "";
-    bookmarks.forEach(({ verse, date }) => {
-        bookMarkContainer.innerHTML += `
-            <div class="exampleBookMark">
-                <p class="exampleVerse">${verse}</p>
-                <p class="date">${date}</p>
-            </div>`;
-    });
-};
-
 // Function to load prayers
 const loadPrayers = async () => {
-    const archiveDisplay = document.getElementById("archiveDisplay");
     try {
-        const response = await fetch(`${API_BASE_URL}/getMomPrayers`, {
+        const res = await fetch(`${API_BASE_URL}/getMomPrayers`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         });
-        const result = await response.json();
+        const { success, prayers } = await res.json();
 
-        if (response.ok && result.success) {
-            const { prayers } = result;
+        if (success) {
+            prayerArchiveDisplay.innerHTML = ""; // Clear existing prayers
             prayers.forEach(({ _id, prayerTitle, prayerBody }) => {
                 displayPrayer(_id, prayerTitle, prayerBody);
             });
         } else {
-            archiveDisplay.innerHTML = "<p>No prayers available.</p>";
+            prayerArchiveDisplay.innerHTML = "<p>No prayers available.</p>";
         }
     } catch (error) {
         console.error("Error loading prayers:", error);
-        archiveDisplay.innerHTML = "<p>Error loading prayers.</p>";
+        prayerArchiveDisplay.innerHTML = "<p>Error loading prayers.</p>";
     }
 };
 
 // Function to display a prayer
 const displayPrayer = (id, title, prayer) => {
-    const archiveDisplay = document.getElementById("archiveDisplay");
     const prayerDiv = `
         <div class="prayerEntry">
             <h3>${title}</h3>
@@ -133,12 +92,17 @@ const displayPrayer = (id, title, prayer) => {
             <button class="delete-prayer-btn" data-id="${id}">Delete</button>
         </div>
     `;
-    archiveDisplay.innerHTML += prayerDiv;
-
-    // Add event listener to the delete button
-    const deleteButton = archiveDisplay.querySelector(`[data-id="${id}"]`);
-    deleteButton.addEventListener("click", () => deleteMomPrayer(id, deleteButton.parentElement));
+    prayerArchiveDisplay.innerHTML += prayerDiv;
 };
+
+// Event delegation for delete buttons
+prayerArchiveDisplay.addEventListener("click", (event) => {
+    if (event.target.classList.contains("delete-prayer-btn")) {
+        const id = event.target.getAttribute("data-id");
+        const prayerElement = event.target.parentElement;
+        deleteMomPrayer(id, prayerElement);
+    }
+});
 
 // Function to delete a prayer
 const deleteMomPrayer = async (id, prayerElement) => {
@@ -146,14 +110,15 @@ const deleteMomPrayer = async (id, prayerElement) => {
     if (!confirmation) return;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/deleteMomPrayer/${id}`, {
+        const res = await fetch(`${API_BASE_URL}/deleteMomPrayer/${id}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
         });
 
-        if (response.ok) {
-            alert("Prayer deleted successfully.");
+        const { success } = await res.json();
+        if (success) {
             prayerElement.remove();
+            alert("Prayer deleted successfully.");
         } else {
             alert("Failed to delete prayer.");
         }
@@ -163,63 +128,31 @@ const deleteMomPrayer = async (id, prayerElement) => {
     }
 };
 
-// Show and hide sections with animations
-const showSection = (section) => section.classList.add("active");
-const hideSections = () => {
-    bookMarkSection.classList.remove("active");
-    prayerArchiveSection.classList.remove("active");
-};
-
-// Event Listeners for Navigation Tabs
-bookMarkTab.addEventListener("click", () => {
-    showSection(bookMarkSection);
-    loadMomBookmarks();
-});
-
-prayerTab.addEventListener("click", () => {
-    showSection(prayerArchiveSection);
-    loadPrayers();
-});
-
-backBookMark.addEventListener("click", hideSections);
-prayerBack.addEventListener("click", hideSections);
-
-// Prayer Form Functionality
-const prayerForm = document.getElementById("prayerForm");
-const showFormBtn = document.getElementById("showFormBtn");
-const submitPrayerBtn = document.getElementById("submitPrayerButton");
-
-const showFormFun = () => { prayerForm.style.display = 'flex'; };
-const closeFormFun = () => { prayerForm.style.display = 'none'; };
-
-showFormBtn.addEventListener("click", showFormFun);
-submitPrayerBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    savePrayer();
-    closeFormFun();
-});
-
-// Save a prayer
+// Function to save a prayer
 const savePrayer = async () => {
-    const prayerTitle = document.getElementById("prayerTitle").value.trim();
-    const prayerContent = document.getElementById("prayerContent").value.trim();
+    const prayerTitleInput = document.getElementById("prayerTitle");
+    const prayerContentInput = document.getElementById("prayerContent");
+    const titleValue = prayerTitleInput.value.trim();
+    const bodyValue = prayerContentInput.value.trim();
 
-    if (!prayerTitle || !prayerContent) {
+    if (!titleValue || !bodyValue) {
         alert("Title and prayer content are required!");
         return;
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/saveMomPrayer`, {
+        const res = await fetch(`${API_BASE_URL}/saveMomPrayer`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prayerTitle, prayerBody: prayerContent }),
+            body: JSON.stringify({ prayerTitle: titleValue, prayerBody: bodyValue }),
         });
 
-        if (response.ok) {
+        const { success, prayer } = await res.json();
+        if (success) {
+            displayPrayer(prayer._id, prayer.prayerTitle, prayer.prayerBody);
             alert("Prayer saved successfully!");
-            const result = await response.json();
-            displayPrayer(result._id, result.prayerTitle, result.prayerBody);
+            prayerTitleInput.value = "";
+            prayerContentInput.value = "";
         } else {
             alert("Failed to save prayer.");
         }
@@ -229,5 +162,23 @@ const savePrayer = async () => {
     }
 };
 
-// Fetch the verse of the day on button click
+// Event Listeners
+submitPrayerBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    savePrayer();
+});
+
+prayerTab.addEventListener("click", () => {
+    prayerArchiveSection.classList.add("active");
+    loadPrayers();
+});
+
+prayerBack.addEventListener("click", () => {
+    prayerArchiveSection.classList.remove("active");
+});
+
+showFormBtn.addEventListener("click", () => {
+    prayerForm.style.display = 'flex';
+});
+
 grabBtn.addEventListener("click", pullData);
