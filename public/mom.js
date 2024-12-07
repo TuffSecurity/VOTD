@@ -2,7 +2,7 @@
 const verseDisplay = document.getElementById("verseDisplay");
 const grabBtn = document.getElementById("verseGrab");
 const placeHolder = document.getElementById("disappear");
-const bookmarkIcon = document.createElement("span");
+const bookmarkIcon = document.getElementById("bookmarkIcon");
 bookmarkIcon.classList.add("hidden");
 const API_BASE_URL = window.location.origin;
 
@@ -33,7 +33,6 @@ const pullData = async () => {
         const [{ bookname, chapter, verse, text }] = res;
         const verseText = `${bookname} ${chapter}:${verse}, ${text}`;
         updateVerse(verseText);
-verseDisplay.appendChild(bookmarkIcon);
         // Show the bookmark icon and enable saving
         bookmarkIcon.classList.add("visible");
         bookmarkIcon.addEventListener("click", () => saveMomBookmark(verseText));

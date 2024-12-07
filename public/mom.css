@@ -293,3 +293,69 @@ nav ul li:hover {
 .visible {
     display: inline;
 }
+/* Prayer Form Styles */
+#prayerForm {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-size: 1rem;
+    color: #2d3748;
+}
+
+#prayerForm label {
+    font-weight: bold;
+    color: #4a5568;
+}
+
+#prayerForm input[type="text"],
+#prayerForm textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #2d3748;
+    background: #edf2f7;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#prayerForm input[type="text"]:focus,
+#prayerForm textarea:focus {
+    border-color: #3182ce;
+    box-shadow: 0 0 5px rgba(49, 130, 206, 0.5);
+    outline: none;
+}
+
+#prayerForm textarea {
+    resize: none;
+}
+
+#prayerForm button {
+    background: linear-gradient(135deg, #4299e1, #3182ce);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 5px 12px rgba(66, 153, 225, 0.4);
+}
+
+#prayerForm button:hover {
+    background: linear-gradient(135deg, #3182ce, #2b6cb0);
+    transform: translateY(-2px);
+    box-shadow: 0 7px 15px rgba(49, 130, 206, 0.5);
+}
+
+#prayerForm button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 8px rgba(49, 130, 206, 0.3);
+}

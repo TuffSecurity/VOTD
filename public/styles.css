@@ -7,8 +7,9 @@
 
 body {
     background-color: #f0f0f0;
-    background-image: url('file-kZGvbnHgwsShjROOF3YWhpRU.webp');
+    background-image: url('file-XUXuiocNESmjQjiHZNyNqc.webp');
     background-size: cover;
+    overflow: auto;
     background-repeat: no-repeat;
     min-height: 100vh;
     display: flex;
@@ -40,6 +41,8 @@ header {
     color: #fff;
     padding: 15px 25px;
     border-radius: 0 0 15px 15px;
+    width: 100%;
+    text-align: center;
 }
 
 header h1 {
