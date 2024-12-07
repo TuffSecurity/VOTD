@@ -19,13 +19,6 @@ body {
     padding-top: 200px; /* Space for fixed header */
 }
 
-@media screen and (max-width: 768px) {
-    body {
-        background-size: contain;
-    background-position: center;
-    }
-}
-
 /* Header Styling */
 header {
     position: fixed;
@@ -36,12 +29,20 @@ header {
     background-image: url('file-x9V6uuy0uIl8uiaEIR45ai6t.webp');
     background-size: cover;
     background-position: center;
+    overflow: hidden;
     clip-path: ellipse(80% 100% at top);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     z-index: 10;
     display: flex;
     align-items: flex-end;
     justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        background-size: cover;
+    background-position: center;
+    }
 }
 
 .header-content {
