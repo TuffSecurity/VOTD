@@ -114,7 +114,7 @@ const savePrayer = async () => {
         });
 
         const { success, prayer } = await res.json();
-        if (success) {
+        if (success && prayer) {
             displayPrayer(prayer._id, prayer.prayerTitle, prayer.prayerBody);
             alert("Prayer saved successfully!");
             prayerTitleInput.value = "";
