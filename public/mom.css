@@ -15,7 +15,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 70px 20px 20px 20px;
     text-align: center;
     transition: background-color 0.5s ease, color 0.3s ease;
 }
@@ -186,8 +186,7 @@ nav {
     padding: 15px;
     display: flex;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);   
 }
 
 nav ul {
@@ -273,6 +272,13 @@ nav ul li:hover {
     right: 0;
 }
 
+.prayer-archive-container h2 {
+    font-size: 2rem;
+    color: #2b6cb0;
+    padding: 1rem;
+}
+
+
 .prayer-archive button {
     align-self: flex-start;
     background-color: #3182ce;
@@ -282,7 +288,7 @@ nav ul li:hover {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-bottom: 20px;
+    margin: 20px 0 20px 0;
 }
 
 /* Styling reused for uniformity */
@@ -411,6 +417,7 @@ nav ul li:hover {
     font-size: 0.8rem;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin: 15px 3px 3px 15px;
 }
 
 .delete-prayer-btn:hover {
@@ -422,4 +429,26 @@ nav ul li:hover {
     .exampleBookMark, .prayerEntry {
         padding: 15px;
     }
+}
+
+.verse-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.verse-text {
+    font-size: 1.8rem;
+    font-weight: 600;
+    font-style: italic;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.verse-context {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #2b6cb0;
+    align-self: flex-end; /* Align to the right */
 }

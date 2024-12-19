@@ -33,7 +33,10 @@ const pullData = async () => {
         const req = await fetch('https://labs.bible.org/api/?passage=votd&formatting=para&type=json');
         const res = await req.json();
         const [{ bookname, chapter, verse, text }] = res;
-        const verseText = `${bookname} ${chapter}:${verse}, ${text}`;
+        const verseText = `<div class="verse-container">
+        <p class="verse-text">${text}</p>
+        <p class="verse-context">${bookname} ${chapter}:${verse}</p>
+    </div>`;
         updateVerse(verseText);
         bookmarkIcon.classList.add("visible");
         bookmarkIcon.addEventListener("click", () => saveBookmark(verseText));
@@ -211,6 +214,7 @@ prayerTab.addEventListener("click", () => {
 
 prayerBack.addEventListener("click", () => {
     prayerArchiveSection.classList.remove("active");
+    prayerForm.style.display = 'None';
 });
 
 showFormBtn.addEventListener("click", () => {

@@ -349,7 +349,7 @@ nav ul li:hover {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-bottom: 20px;
+    margin: 20px 0 20px 0;
 }
 
 .prayer-archive button:hover {
@@ -358,6 +358,7 @@ nav ul li:hover {
 .prayer-archive-container h2 {
     font-size: 2rem;
     color: #6a0dad;
+    padding: 1rem;
 }
 
 .prayer-archive-container p {
@@ -496,4 +497,27 @@ button:active {
         font-size: 0.85rem;
         padding: 8px 12px;
     }
+}
+
+/* Verse Display Styling */
+.verse-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.verse-text {
+    font-size: 1.8rem;
+    font-weight: 600;
+    font-style: italic;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.verse-context {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #6a0dad;
+    align-self: flex-end; /* Align to the right */
 }
